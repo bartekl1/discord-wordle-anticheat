@@ -74,6 +74,7 @@ There is no public instance of this bot. If you want to use it, you need to host
 ### Running the bot
 
 1. Make sure you have [Python](https://www.python.org/downloads/) installed.
+
 2. Clone this repository or download the source code.
 ```bash
 git clone https://github.com/bartekl1/discord-wordle-anticheat.git
@@ -83,7 +84,7 @@ cd discord-wordle-anticheat
 ```bash
 # On Linux
 python3 -m venv venv
-./venv/Scripts/activate
+. ./venv/bin/activate
 # On Windows (cmd)
 py -m venv venv
 .\venv\Scripts\activate.bat
@@ -108,6 +109,35 @@ Replace `<BOT_TOKEN>` with your bot token you copied earlier. You can change `da
 python3 bot.py
 # On Windows
 py bot.py
+```
+
+### Hosting the bot (Linux)
+
+1. Follow the steps in the "Running the bot" section to set up the bot. If everything works correctly, proceed to the next step.
+
+2. Create a systemd service file `/etc/systemd/system/discord-wordle-anticheat.service` with the following content:
+```ini
+[Unit]
+Description=Discord Wordle Anti-Cheat Bot
+After=network.target
+
+[Service]
+Type=simple
+User=<USERNAME>
+WorkingDirectory=<PATH>
+ExecStart=<PATH>/venv/bin/python <PATH>/bot.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+Replace `<USERNAME>` with the user you want to run the bot as and `<PATH>` with the path to the bot directory.
+
+3. Reload systemd, enable and start the service:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable discord-wordle-anticheat
+sudo systemctl start discord-wordle-anticheat
 ```
 
 ## ⚙️ Bot usage

@@ -1,0 +1,15 @@
+# /etc/systemd/system/discord-wordle-anticheat.service
+
+[Unit]
+Description=Discord Wordle Anti-Cheat Bot
+After=network.target
+
+[Service]
+Type=simple
+User=<USERNAME>
+WorkingDirectory=<PATH>
+ExecStart=<PATH>/venv/bin/python <PATH>/bot.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
