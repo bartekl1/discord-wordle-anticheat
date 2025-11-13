@@ -18,7 +18,7 @@ class Client(discord.Client):
         intents = discord.Intents.all()
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
-        self.answer_cache = {"word": None, "date": None}
+        self.answer_cache = (None, None)
 
     async def on_ready(self) -> None:
         await self.wait_until_ready()
@@ -68,7 +68,8 @@ async def on_message(message: discord.Message) -> None:
     guild = await get_guild(message.guild.id)
     if not guild.enabled:
         return
-    if await get_today_answer(client.answer_cache) in message.content.lower():
+    message_text = re.sub(r"[^A-Za-z]|(regional_indicator_)", "", message.content).lower()
+    if await get_today_answer(client.answer_cache) in message_text:
         await message.delete()
         await message.channel.send(f":warning: {message.author.mention}, your message has been deleted because it contained today's Wordle answer.", silent=True)
 
