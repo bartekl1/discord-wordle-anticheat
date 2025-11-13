@@ -101,17 +101,17 @@ pip install -r requirements.txt
 bot_token: <BOT_TOKEN>
 database_url: sqlite+aiosqlite:///./wordle_anticheat.db
 ```
-Replace `<BOT_TOKEN>` with your bot token you copied earlier. You can change `database_url` to use different database if needed.
+Replace `<BOT_TOKEN>` with your bot token you copied earlier. You can change `database_url` to use a different database if needed.
 
 6. Run the bot.
 ```bash
-# On Linux
+# On UNIX
 python3 bot.py
 # On Windows
 py bot.py
 ```
 
-### Hosting the bot (Linux)
+### Hosting the bot (UNIX)
 
 1. Follow the steps in the "Running the bot" section to set up the bot. If everything works correctly, proceed to the next step.
 
@@ -146,7 +146,7 @@ Use `/enable` command to enable or `/disable` command to disable anti-cheat in t
 
 Use `/status` command to check if anti-cheat is currently enabled in the server.
 
-If anti-cheat is enabled, bot will automatically delete messages containing Wordle answers and send a message notifying the user about the deletion.
+If anti-cheat is enabled, the bot will automatically delete messages containing Wordle answers and send a message notifying the user about the deletion.
 
 ## 📜 License
 
