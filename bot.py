@@ -69,7 +69,7 @@ async def on_message(message: discord.Message) -> None:
     guild = await get_guild(message.guild.id)
     if not guild.enabled:
         return
-    message_text = re.sub(r"[^A-Za-z]|(regional_indicator_)", "", message.content).lower()
+    message_text = re.sub(r"(:regional_indicator_[A-Za-z]:)|[^A-Za-z]", "", message.content).lower()
     if client.answer_cache[1] in message_text:
         await message.delete()
         await message.channel.send(f":warning: {message.author.mention}, your message has been deleted because it contained today's Wordle answer.", silent=True)
