@@ -2,6 +2,7 @@ import discord
 from discord import app_commands
 import yaml
 import asyncio
+import re
 
 import database
 from wordle_api import update_answer_cache
