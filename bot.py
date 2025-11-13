@@ -4,7 +4,7 @@ import yaml
 import asyncio
 
 import database
-from wordle_api import get_today_answer
+from wordle_api import update_answer_cache
 from guild_functions import get_guild, change_enabled
 
 CONFIG_PATH = "config.yaml"
@@ -63,13 +63,14 @@ async def anticheat_status(interaction: discord.Interaction) -> None:
 
 @client.event
 async def on_message(message: discord.Message) -> None:
+    client.answer_cache = await update_answer_cache(client.answer_cache)
     if message.author == client.user:
         return
     guild = await get_guild(message.guild.id)
     if not guild.enabled:
         return
     message_text = re.sub(r"[^A-Za-z]|(regional_indicator_)", "", message.content).lower()
-    if await get_today_answer(client.answer_cache) in message_text:
+    if client.answer_cache[1] in message_text:
         await message.delete()
         await message.channel.send(f":warning: {message.author.mention}, your message has been deleted because it contained today's Wordle answer.", silent=True)
 
