@@ -140,6 +140,9 @@ sudo systemctl enable discord-wordle-anticheat
 sudo systemctl start discord-wordle-anticheat
 ```
 
+> [!NOTE]
+> A good security practice is to set the `User` to `nobody`. If you do this, you must make the database file world-writable (`rw-rw-rw-`) when using SQLite. In any other case, no further configuration is required.
+
 ### Updating to the latest version
 
 1. Download latest source code from the repository.

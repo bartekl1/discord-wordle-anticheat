@@ -13,6 +13,7 @@ from strings import STRINGS
 from __version__ import __version__
 
 CONFIG_PATH = "config.yaml"
+WORDLE_BOT_ID = 1211781489931452447
 
 def load_config() -> dict:
     with open(CONFIG_PATH, "r") as f:
@@ -94,13 +95,19 @@ async def bot_settings(interaction: discord.Interaction) -> None:
 
 @client.event
 async def on_message(message: discord.Message) -> None:
-    client.answer_cache = await update_answer_cache(client.answer_cache)
     if message.author == client.user:
         return
+    
     guild = await get_guild_settings(message.guild.id)
     if not guild["anticheat"]:
         return
-
+    
+    if message.author.id == WORDLE_BOT_ID and guild["delete_wordle_messages"]:
+        if not message.content.startswith("**Y"): await message.delete()
+        return
+    
+    client.answer_cache = await update_answer_cache(client.answer_cache)
+    
     message_text = message.content.lower()
     message_text = unidecode(message_text) if guild["replace_diacritics"] else message_text
     message_text = re.sub(r"[^A-Za-z]", "", message_text).lower() if guild["remove_not_letters"] else message_text
