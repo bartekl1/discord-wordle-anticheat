@@ -24,6 +24,7 @@ async def get_guild_settings(guild_id: int) -> dict:
         "remove_not_letters": guild.remove_not_letters,
         "reversed_detection": guild.reversed_detection,
         "send_messages": guild.send_messages,
+        "delete_wordle_messages": guild.delete_wordle_messages,
     }
 
 async def change_guild_settings(guild_id: int, settings: dict) -> None:
